@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import io.reactivex.Maybe
 
 class RxRouter private constructor() {
@@ -12,7 +13,7 @@ class RxRouter private constructor() {
     private var datagram: Datagram = Datagram.empty()
 
     private var context: Context? = null
-    private var activity: Activity? = null
+    private var activity: FragmentActivity? = null
     private var fragment: Fragment? = null
 
     companion object {
@@ -22,7 +23,7 @@ class RxRouter private constructor() {
             return rxRouter
         }
 
-        fun of(activity: Activity): RxRouter {
+        fun of(activity: FragmentActivity): RxRouter {
             val rxRouter = RxRouter()
             rxRouter.activity = activity
             return rxRouter
@@ -73,10 +74,10 @@ class RxRouter private constructor() {
     fun route(uri: String): Maybe<Result> {
         datagram.uri = uri
         return when {
-            context != null -> router.route(context!!, datagram)
             activity != null -> router.route(activity!!, datagram)
             fragment != null -> router.route(fragment!!, datagram)
-            else -> throw IllegalStateException("This will never happen.")
+            context != null -> router.route(context!!, datagram)
+            else -> throw IllegalStateException("This should never happen.")
         }
     }
 }

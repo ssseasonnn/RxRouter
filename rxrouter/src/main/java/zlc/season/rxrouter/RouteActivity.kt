@@ -37,6 +37,10 @@ class RouteActivity : Activity() {
         super.onCreate(savedInstanceState)
         datagram = intent.getParcelableExtra(IN_DATAGRAM)
 
+        realRoute()
+    }
+
+    private fun realRoute() {
         val realIntent = Intent(RouteActivity@ this, RxRouterProviders.provide(datagram.uri))
 
         if (datagram.data != null) {
@@ -54,10 +58,10 @@ class RouteActivity : Activity() {
         }
 
         if (requestCode == RC_ROUTE) {
-            RouteResultServiceHolder.get(datagram.uri)?.dispatch(Result(resultCode, data!!))
+            RouteResultServiceHolder.get(datagram.uri)?.success(Result(resultCode, data))
             finish()
         }
 
-        throw IllegalStateException("This will never happen.")
+        throw IllegalStateException("This should never happen.")
     }
 }

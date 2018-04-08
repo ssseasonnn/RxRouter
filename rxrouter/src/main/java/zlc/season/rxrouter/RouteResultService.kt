@@ -6,8 +6,12 @@ import io.reactivex.processors.PublishProcessor
 class RouteResultService {
     private val processor: FlowableProcessor<Result> = PublishProcessor.create()
 
-    fun dispatch(result: Result) {
+    fun success(result: Result) {
         processor.onNext(result)
+    }
+
+    fun error(throwable: Throwable) {
+        processor.onError(throwable)
     }
 
     fun get(): FlowableProcessor<Result> {

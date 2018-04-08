@@ -1,8 +1,8 @@
 package zlc.season.rxrouter
 
-import android.app.Activity
 import android.content.Context
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import io.reactivex.Maybe
 
 class LocalRouter : Router {
@@ -12,27 +12,34 @@ class LocalRouter : Router {
         })
     }
 
-    override fun route(activity: Activity, datagram: Datagram): Maybe<Result> {
+    override fun route(activity: FragmentActivity, datagram: Datagram): Maybe<Result> {
         return real(datagram, {
-            RouteActivity.route(activity, datagram)
+            RouteFragment.route(activity, datagram)
         })
     }
 
     override fun route(fragment: Fragment, datagram: Datagram): Maybe<Result> {
         return real(datagram, {
-            RouteActivity.route(fragment, datagram)
+            RouteFragment.route(fragment, datagram)
         })
     }
 
     private fun real(datagram: Datagram, action: () -> Unit): Maybe<Result> {
+        return Maybe.just(obtain(datagram))
+                .doOnSuccess {
+                    action()
+                }
+                .flatMap {
+                    it.get().lastElement()
+                }
+    }
+
+    private fun obtain(datagram: Datagram): RouteResultService {
         var routeService = RouteResultServiceHolder.get(datagram.uri)
         if (routeService == null) {
             routeService = RouteResultService()
             RouteResultServiceHolder.put(datagram.uri, routeService)
         }
-
-        action()
-
-        return routeService.get().lastElement()
+        return routeService
     }
 }
