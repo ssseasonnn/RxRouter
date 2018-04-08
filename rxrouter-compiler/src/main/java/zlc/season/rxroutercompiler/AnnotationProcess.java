@@ -13,7 +13,6 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -27,13 +26,12 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
-import zlc.season.rxrouterannotation.Module;
+import zlc.season.rxrouterannotation.Router;
 import zlc.season.rxrouterannotation.Provider;
 import zlc.season.rxrouterannotation.Uri;
 
@@ -52,21 +50,16 @@ public class AnnotationProcess extends AbstractProcessor {
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
-
         messager = processingEnv.getMessager();
-
-        messager.printMessage(Diagnostic.Kind.NOTE, this.toString());
-        messager.printMessage(Diagnostic.Kind.NOTE, "init");
         elementUtils = processingEnv.getElementUtils();
         filer = processingEnv.getFiler();
-
     }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        Set<String> typs = new LinkedHashSet<>();
-        typs.add(Uri.class.getCanonicalName());
-        return typs;
+        Set<String> types = new LinkedHashSet<>();
+        types.add(Uri.class.getCanonicalName());
+        return types;
     }
 
     @Override
@@ -74,26 +67,13 @@ public class AnnotationProcess extends AbstractProcessor {
         return SourceVersion.latestSupported();
     }
 
-    private int count = 0;
-
-    private void printError(String message) {
-        messager.printMessage(Diagnostic.Kind.ERROR, message);
-    }
-
-    private void printWaring(String waring) {
-        messager.printMessage(Diagnostic.Kind.WARNING, waring);
-    }
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        messager.printMessage(Diagnostic.Kind.NOTE, "process" + count);
-        count++;
 
         Set<? extends Element> uriAnnotations = roundEnvironment.getElementsAnnotatedWith(Uri.class);
-        Set<? extends Element> moduleAnnotations = roundEnvironment.getElementsAnnotatedWith(Module.class);
+        Set<? extends Element> moduleAnnotations = roundEnvironment.getElementsAnnotatedWith(Router.class);
         moduleAnnotationSize += moduleAnnotations.size();
-        printWaring("size: " + moduleAnnotations.size());
-        printWaring("add size: " + moduleAnnotationSize);
 
         for (Element element : moduleAnnotations) {
             String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
@@ -106,7 +86,10 @@ public class AnnotationProcess extends AbstractProcessor {
 
         if (roundEnvironment.processingOver()) {
             if (moduleAnnotationSize == 0) {
-                printWaring("You should add Module annotation");
+                printError("You need to add a class that is annotated by @Router to your module!");
+            }
+            if (moduleAnnotationSize > 1) {
+                printError("Too many classes annotated by @Router in your module!");
             }
         }
 
@@ -155,5 +138,13 @@ public class AnnotationProcess extends AbstractProcessor {
         JavaFile.builder(packageName, routerTableProvider)
                 .build()
                 .writeTo(filer);
+    }
+
+    private void printError(String message) {
+        messager.printMessage(Diagnostic.Kind.ERROR, message);
+    }
+
+    private void printWaring(String waring) {
+        messager.printMessage(Diagnostic.Kind.WARNING, waring);
     }
 }
