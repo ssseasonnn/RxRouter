@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import zlc.season.rxrouter.RxRouter.Companion.ROUTE_DATA
 
 class RouteFragment : Fragment() {
 
@@ -70,9 +71,7 @@ class RouteFragment : Fragment() {
         this.datagram = datagram
 
         val realIntent = Intent(context, RxRouterProviders.provide(datagram.uri))
-        if (datagram.data != null) {
-            realIntent.putExtras(datagram.data)
-        }
+        realIntent.putExtra(ROUTE_DATA, datagram)
         startActivityForResult(realIntent, RC_ROUTE)
     }
 

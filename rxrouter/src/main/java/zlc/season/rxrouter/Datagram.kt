@@ -6,6 +6,10 @@ import android.os.Parcelable
 
 data class Datagram(
         var uri: String = "",
+        var action: String? = null,
+        var flags: Int? = null,
+        var category: String? = null,
+        var clazz: Class<*>? = null,
         var intValue: Int? = null,
         var longValue: Long? = null,
         var floatValue: Float? = null,
@@ -16,6 +20,10 @@ data class Datagram(
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
+            source.readString(),
+            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readString(),
+            source.readSerializable() as Class<*>?,
             source.readValue(Int::class.java.classLoader) as Int?,
             source.readValue(Long::class.java.classLoader) as Long?,
             source.readValue(Float::class.java.classLoader) as Float?,
@@ -29,6 +37,10 @@ data class Datagram(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(uri)
+        writeString(action)
+        writeValue(flags)
+        writeString(category)
+        writeSerializable(clazz)
         writeValue(intValue)
         writeValue(longValue)
         writeValue(floatValue)
