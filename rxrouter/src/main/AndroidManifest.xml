@@ -3,7 +3,7 @@
     package="zlc.season.rxrouter">
 
     <application>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".RouteActivity" />
     </application>
 
 </manifest>

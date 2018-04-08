@@ -34,6 +34,7 @@ import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
 import zlc.season.rxrouterannotation.Module;
+import zlc.season.rxrouterannotation.Provider;
 import zlc.season.rxrouterannotation.Uri;
 
 import static javax.lang.model.element.Modifier.FINAL;
@@ -135,9 +136,9 @@ public class AnnotationProcess extends AbstractProcessor {
             staticBlock.add("table.put($S,$T.class);\n", uri, activity);
         }
 
-        MethodSpec parseMethod = MethodSpec.methodBuilder("parseUri")
+        MethodSpec provideMethod = MethodSpec.methodBuilder("provide")
                 .addModifiers(Modifier.PUBLIC)
-//                .addAnnotation(AnnotationSpec.builder(Override.class).build())
+                .addAnnotation(AnnotationSpec.builder(Override.class).build())
                 .addParameter(String.class, "uri")
                 .returns(classWithWildcard)
                 .addStatement("return table.get(uri)")
@@ -145,9 +146,10 @@ public class AnnotationProcess extends AbstractProcessor {
 
         TypeSpec routerTableProvider = TypeSpec.classBuilder(className + "Provider")
                 .addModifiers(PUBLIC, FINAL)
+                .addSuperinterface(ClassName.get(Provider.class))
                 .addField(routerTable)
                 .addStaticBlock(staticBlock.build())
-                .addMethod(parseMethod)
+                .addMethod(provideMethod)
                 .build();
 
         JavaFile.builder(packageName, routerTableProvider)

@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
@@ -28,34 +26,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    implementation project(':sample-library')
+    implementation project(':rxrouter')
 
     kapt project(':rxrouter-compiler')
-    api project(':rxrouter-annotation')
-
-    compile project(':rxrouter')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-}
-
-//def printMainifest() {
-//    println("hahahaha")
-//    manifestDir = "${buildDir}/manifests/full/release"
-//    file = new File(manifestDir+"AndroidManifest.xml")
-//    str = new XmlParser().parse(file).toString()
-//    println(str)
-//}
-//
-//
-afterEvaluate { project ->
-    project.tasks.each {
-        if (it.name.startsWith("package")) {
-            it.doFirst {
-                println("before package")
-            }
-        }
-    }
 }
