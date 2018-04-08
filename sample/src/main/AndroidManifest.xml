@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="zlc.season.rxrouterproject">
+    package="zlc.season.sample">
 
     <application
         android:name=".CustomApplication"
@@ -17,12 +17,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Test1Activity">
+        <activity android:name=".UriActivity" />
+        <activity android:name=".UriForResultActivity" />
+        <activity android:name=".ActionActivity">
             <intent-filter>
-                <action android:name="zlc.season.test1_activity" />
+                <action android:name="zlc.season.sample.action" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActionForResultActivity">
+            <intent-filter>
+                <action android:name="zlc.season.sample.action_for_result" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ClassActivity" />
+        <activity android:name=".ClassForResultActivity" />
+        <activity android:name=".UriMenuActivity" />
+        <activity android:name=".ActionMenuActivity" />
+        <activity android:name=".ClazzMenuActivity"></activity>
     </application>
 
 </manifest>

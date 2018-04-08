@@ -42,7 +42,9 @@ class RouteActivity : Activity() {
     }
 
     private fun realRoute() {
-        val realIntent = Intent(RouteActivity@ this, RxRouterProviders.provide(datagram.uri))
+        val dest = RxRouterProviders.provide(datagram.uri)
+                ?: throw IllegalStateException("This uri [${datagram.uri}] not found! Please confirm this route is added.")
+        val realIntent = Intent(RouteActivity@ this, dest)
         realIntent.putExtra(ROUTE_DATA, datagram)
         startActivityForResult(realIntent, RC_ROUTE)
     }

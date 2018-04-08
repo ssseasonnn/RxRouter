@@ -1,4 +1,4 @@
-package zlc.season.rxrouterproject
+package zlc.season.sample
 
 import android.app.Application
 import zlc.season.rxrouter.RxRouterProviders

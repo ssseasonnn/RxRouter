@@ -5,30 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="zlc.season.sample.MainActivity">
+    tools:context="zlc.season.sample.UriMenuActivity">
 
     <Button
-        android:id="@+id/uri"
+        android:id="@+id/current_uri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uri路由跳转" />
+        android:text="当前Module class跳转" />
 
     <Button
-        android:id="@+id/action"
+        android:id="@+id/current_uri_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="原始Action跳转" />
+        android:text="当前Module class跳转并获取返回结果" />
 
     <Button
-        android:id="@+id/clazz"
+        android:id="@+id/library_uri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="目标Class跳转" />
+        android:text="Library Module class跳转" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/library_uri_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
+        android:text="Library Module class跳转并获取返回结果" />
 </LinearLayout>

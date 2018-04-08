@@ -1,4 +1,4 @@
-package zlc.season.rxrouterproject
+package zlc.season.sample
 
 import org.junit.Test
 

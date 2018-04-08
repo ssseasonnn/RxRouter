@@ -1,4 +1,4 @@
-package zlc.season.rxrouterproject
+package zlc.season.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -16,19 +16,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button1.setOnClickListener {
+        uri.setOnClickListener {
             RxRouter.of(this)
-                    .route("test1_activity")
+                    .route("this is a uri")
                     .subscribe()
         }
 
-        button2.setOnClickListener {
+        action.setOnClickListener {
             RxRouter.of(this)
                     .route(libraryFoo)
                     .subscribe()
         }
 
-        button3.setOnClickListener {
+        clazz.setOnClickListener {
             RxRouter.of(this)
                     .route(libraryBar)
                     .subscribe()
