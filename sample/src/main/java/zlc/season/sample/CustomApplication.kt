@@ -2,6 +2,7 @@ package zlc.season.sample
 
 import android.app.Application
 import android.widget.Toast
+import io.reactivex.plugins.RxJavaPlugins
 import zlc.season.rxrouter.RxRouterProviders
 import zlc.season.samplelibrary.LibraryRouterProvider
 
@@ -14,6 +15,10 @@ class CustomApplication : Application() {
         super.onCreate()
         app = this
         RxRouterProviders.add(MainRouterProvider(), LibraryRouterProvider())
+
+        RxJavaPlugins.setErrorHandler {
+            it.printStackTrace()
+        }
     }
 }
 
