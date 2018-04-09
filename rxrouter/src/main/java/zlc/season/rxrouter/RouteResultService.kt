@@ -8,6 +8,7 @@ class RouteResultService {
 
     fun success(result: Result) {
         processor.onNext(result)
+        processor.onComplete()
     }
 
     fun error(throwable: Throwable) {

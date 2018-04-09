@@ -80,6 +80,7 @@ class RouteFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
+            RouteResultServiceHolder.get(datagram.uri)?.success(Result.empty())
             return
         }
 

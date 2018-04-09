@@ -16,7 +16,7 @@ data class Datagram(
         var doubleValue: Double? = null,
         var stringValue: String? = null,
         var booleanValue: Boolean? = null,
-        var data: Bundle? = null
+        var bundle: Bundle? = null
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
@@ -47,7 +47,7 @@ data class Datagram(
         writeValue(doubleValue)
         writeString(stringValue)
         writeValue(booleanValue)
-        writeParcelable(data, 0)
+        writeParcelable(bundle, 0)
     }
 
     companion object {

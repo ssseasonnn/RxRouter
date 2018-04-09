@@ -17,27 +17,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UriActivity" />
-        <activity android:name=".UriForResultActivity" />
-        <activity android:name=".ActionActivity">
+
+        <activity
+            android:name=".UriActivity"
+            android:label="UriActivity" />
+
+        <activity
+            android:name=".UriForResultActivity"
+            android:label="UriForResultActivity" />
+
+        <activity
+            android:name=".ActionActivity"
+            android:label="ActionActivity">
             <intent-filter>
                 <action android:name="zlc.season.sample.action" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActionForResultActivity">
+        <activity
+            android:name=".ActionForResultActivity"
+            android:label="ActionForResultActivity">
             <intent-filter>
                 <action android:name="zlc.season.sample.action_for_result" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ClassActivity" />
-        <activity android:name=".ClassForResultActivity" />
-        <activity android:name=".UriMenuActivity" />
-        <activity android:name=".ActionMenuActivity" />
-        <activity android:name=".ClazzMenuActivity"></activity>
+
+        <activity
+            android:name=".ClassActivity"
+            android:label="ClassActivity" />
+        <activity
+            android:name=".ClassForResultActivity"
+            android:label="ClassForResultActivity" />
+
+        <activity
+            android:name=".UriMenuActivity"
+            android:label="UriMenuActivity" />
+        <activity
+            android:name=".ActionMenuActivity"
+            android:label="ActionMenuActivity" />
+        <activity
+            android:name=".ClassMenuActivity"
+            android:label="ClassMenuActivity" />
+
     </application>
 
 </manifest>

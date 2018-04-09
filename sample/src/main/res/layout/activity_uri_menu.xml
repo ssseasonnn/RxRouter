@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,26 +7,30 @@
     tools:context="zlc.season.sample.UriMenuActivity">
 
     <Button
-        android:id="@+id/current_uri"
+        android:id="@+id/uri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="当前Module Uri跳转" />
+        android:text="Uri跳转" />
 
     <Button
-        android:id="@+id/current_uri_for_result"
+        android:id="@+id/uri_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="当前Module Uri跳转并获取返回结果" />
-
-    <Button
-        android:id="@+id/library_uri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Library Module Uri跳转" />
+        android:text="Uri跳转并获取返回结果" />
 
     <Button
         android:id="@+id/library_uri_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Library Module Uri跳转并获取返回结果" />
+        android:text="Library Uri跳转并获取返回结果" />
+
+    <TextView
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="testasldf" />
+
 </LinearLayout>

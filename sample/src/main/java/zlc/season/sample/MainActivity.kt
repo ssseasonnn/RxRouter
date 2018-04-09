@@ -18,19 +18,19 @@ class MainActivity : AppCompatActivity() {
 
         uri.setOnClickListener {
             RxRouter.of(this)
-                    .route("this is a uri")
+                    .route(uriMenuActivity)
                     .subscribe()
         }
 
         action.setOnClickListener {
             RxRouter.of(this)
-                    .route(libraryFoo)
+                    .route(actionMenuActivity)
                     .subscribe()
         }
 
         clazz.setOnClickListener {
             RxRouter.of(this)
-                    .route(libraryBar)
+                    .route(clazzMenuActivity)
                     .subscribe()
         }
 

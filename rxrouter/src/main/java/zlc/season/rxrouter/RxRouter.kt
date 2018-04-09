@@ -74,7 +74,7 @@ class RxRouter private constructor() {
     }
 
     fun with(bundle: Bundle): RxRouter {
-        this.datagram.data = bundle
+        this.datagram.bundle = bundle
         return this
     }
 

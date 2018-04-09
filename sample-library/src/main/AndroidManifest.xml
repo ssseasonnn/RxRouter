@@ -3,8 +3,23 @@
     package="zlc.season.samplelibrary">
 
     <application>
-        <activity android:name=".FooLibraryActivity" />
-        <activity android:name=".BarLibraryActivity"></activity>
+        <activity
+            android:name=".LibraryUriForResultActivity"
+            android:label="LibraryUriForResultActivity" />
+
+        <activity
+            android:name=".LibraryActionForResultActivity"
+            android:label="LibraryActionForResultActivity">
+            <intent-filter>
+                <action android:name="zlc.season.samplelibrary.action_for_result" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LibraryClassForResultActivity"
+            android:label="LibraryClassForResultActivity" />
     </application>
 
 </manifest>

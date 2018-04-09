@@ -3,32 +3,33 @@ package zlc.season.sample
 import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_action_menu.*
+import kotlinx.android.synthetic.main.activity_clazz_menu.*
 import zlc.season.rxrouter.RxRouter
 import zlc.season.rxrouterannotation.Uri
+import zlc.season.samplelibrary.LibraryClassForResultActivity
 
-@Uri(actionMenuActivity)
-class ActionMenuActivity : AppCompatActivity() {
+@Uri(clazzMenuActivity)
+class ClassMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_action_menu)
+        setContentView(R.layout.activity_clazz_menu)
 
-        action.setOnClickListener {
+        clazz.setOnClickListener {
             RxRouter.of(this)
-                    .routeAction("zlc.season.sample.action")
+                    .routeClass(ClassActivity::class.java)
                     .subscribe({
                         "no result".toast()
                     })
         }
 
-        action_for_result.setOnClickListener {
+        clazz_for_result.setOnClickListener {
             RxRouter.of(this)
                     .with(10)
                     .with(true)
                     .with(20.12)
                     .with("this is a string value")
-                    .routeAction("zlc.season.sample.action_for_result")
+                    .routeClass(ClassForResultActivity::class.java)
                     .subscribe {
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
@@ -39,14 +40,14 @@ class ActionMenuActivity : AppCompatActivity() {
                     }
         }
 
-        library_action_for_result.setOnClickListener {
+        library_clazz_for_result.setOnClickListener {
             RxRouter.of(this)
                     .with(2000)
                     .with(9999999999999999)
                     .with(false)
                     .with(0.00001)
                     .with("this is a string value")
-                    .routeAction("zlc.season.samplelibrary.action_for_result")
+                    .routeClass(LibraryClassForResultActivity::class.java)
                     .subscribe {
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
