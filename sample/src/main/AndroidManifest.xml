@@ -56,7 +56,9 @@
         <activity
             android:name=".ClassMenuActivity"
             android:label="ClassMenuActivity" />
-        <activity android:name=".AndroidActionMenuActivity"></activity>
+        <activity
+            android:name=".AndroidActionMenuActivity"
+            android:label="AndroidActionMenuActivity" />
     </application>
 
 </manifest>

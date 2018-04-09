@@ -19,6 +19,8 @@ class ActionMenuActivity : AppCompatActivity() {
                     .routeAction("zlc.season.sample.action")
                     .subscribe({
                         "no result".toast()
+                    }, {
+                        it.message?.toast()
                     })
         }
 

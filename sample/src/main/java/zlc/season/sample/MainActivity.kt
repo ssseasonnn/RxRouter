@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         android_action.setOnClickListener {
-
+            RxRouter.of(this)
+                    .route(androidActionMenu)
+                    .subscribe()
         }
     }
 }

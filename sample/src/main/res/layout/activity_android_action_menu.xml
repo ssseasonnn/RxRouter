@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/action"
+        android:id="@+id/androidAction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="系统Action跳转" />
 
     <Button
-        android:id="@+id/action_for_result"
+        android:id="@+id/androidActionForResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="系统Action跳转并获取返回结果" />

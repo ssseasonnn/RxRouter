@@ -71,7 +71,13 @@ class RouteFragment : Fragment() {
         this.datagram = datagram
 
         val dest = RxRouterProviders.provide(datagram.uri)
-                ?: throw IllegalStateException("This uri [${datagram.uri}] not found! Please confirm this route is added.")
+        if (dest == null) {
+            RouteResultServiceHolder.get(datagram.uri)
+                    ?.error(IllegalStateException("This uri [${datagram.uri}] not found! " +
+                            "Please confirm this route is added."))
+            return
+        }
+
         val realIntent = Intent(context, dest)
         realIntent.putExtra(ROUTE_DATA, datagram)
         startActivityForResult(realIntent, RC_ROUTE)
