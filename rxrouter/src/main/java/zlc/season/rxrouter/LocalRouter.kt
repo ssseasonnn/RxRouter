@@ -6,26 +6,36 @@ import android.support.v4.app.FragmentActivity
 import io.reactivex.Maybe
 
 class LocalRouter : Router {
-    override fun route(context: Context, datagram: Datagram): Maybe<Result> {
-        return real(datagram, {
+    override fun route(context: Context, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
+        return real(datagram, firewalls, {
             RouteActivity.route(context, datagram)
         })
     }
 
-    override fun route(activity: FragmentActivity, datagram: Datagram): Maybe<Result> {
-        return real(datagram, {
+    override fun route(activity: FragmentActivity, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
+        return real(datagram, firewalls, {
             RouteFragment.route(activity, datagram)
         })
     }
 
-    override fun route(fragment: Fragment, datagram: Datagram): Maybe<Result> {
-        return real(datagram, {
+    override fun route(fragment: Fragment, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
+        return real(datagram, firewalls, {
             RouteFragment.route(fragment, datagram)
         })
     }
 
-    private fun real(datagram: Datagram, action: () -> Unit): Maybe<Result> {
-        return Maybe.just(obtain(datagram))
+    private fun real(datagram: Datagram, firewalls: List<Firewall>, action: () -> Unit): Maybe<Result> {
+        return Maybe.just(firewalls)
+                .doOnSuccess {
+                    for (firewall in firewalls) {
+                        if (!firewall.allow(datagram)) {
+                            throw Exceptions.FirewallDenied()
+                        }
+                    }
+                }
+                .map {
+                    obtain(datagram)
+                }
                 .doOnSuccess {
                     action()
                 }

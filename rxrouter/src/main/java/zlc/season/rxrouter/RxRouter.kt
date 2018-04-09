@@ -10,6 +10,7 @@ import io.reactivex.Maybe
 class RxRouter private constructor() {
     private var router: Router = LocalRouter()
 
+    private var firewalls = mutableListOf<Firewall>()
     private var datagram: Datagram = Datagram.empty()
 
     private var context: Context? = null
@@ -88,6 +89,16 @@ class RxRouter private constructor() {
         return this
     }
 
+    fun addFirewall(firewall: Firewall): RxRouter {
+        this.firewalls.add(firewall)
+        return this
+    }
+
+    fun addFirewalls(firewalls: List<Firewall>): RxRouter {
+        this.firewalls.addAll(firewalls)
+        return this
+    }
+
     fun route(uri: String): Maybe<Result> {
         datagram.uri = uri
         return dispatch()
@@ -105,9 +116,9 @@ class RxRouter private constructor() {
 
     private fun dispatch(): Maybe<Result> {
         return when {
-            activity != null -> router.route(activity!!, datagram)
-            fragment != null -> router.route(fragment!!, datagram)
-            context != null -> router.route(context!!, datagram)
+            activity != null -> router.route(activity!!, datagram, firewalls)
+            fragment != null -> router.route(fragment!!, datagram, firewalls)
+            context != null -> router.route(context!!, datagram, firewalls)
             else -> throw IllegalStateException("This should never happen.")
         }
     }
