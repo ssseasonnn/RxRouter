@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_uri_menu.*
 import zlc.season.rxrouter.RxRouter
 import zlc.season.rxrouterannotation.Uri
 
-@Uri(uriMenuActivity)
+@Uri(uriMenu)
 class UriMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

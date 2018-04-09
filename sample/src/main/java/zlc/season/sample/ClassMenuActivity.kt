@@ -8,7 +8,7 @@ import zlc.season.rxrouter.RxRouter
 import zlc.season.rxrouterannotation.Uri
 import zlc.season.samplelibrary.LibraryClassForResultActivity
 
-@Uri(clazzMenuActivity)
+@Uri(clazzMenu)
 class ClassMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -17,15 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".UriActivity"
             android:label="UriActivity" />
-
         <activity
             android:name=".UriForResultActivity"
             android:label="UriForResultActivity" />
-
         <activity
             android:name=".ActionActivity"
             android:label="ActionActivity">
@@ -44,14 +41,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ClassActivity"
             android:label="ClassActivity" />
         <activity
             android:name=".ClassForResultActivity"
             android:label="ClassForResultActivity" />
-
         <activity
             android:name=".UriMenuActivity"
             android:label="UriMenuActivity" />
@@ -61,7 +56,7 @@
         <activity
             android:name=".ClassMenuActivity"
             android:label="ClassMenuActivity" />
-
+        <activity android:name=".AndroidActionMenuActivity"></activity>
     </application>
 
 </manifest>

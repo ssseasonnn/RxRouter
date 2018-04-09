@@ -3,31 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="zlc.season.sample.MainActivity">
-
-    <Button
-        android:id="@+id/uri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Uri路由跳转" />
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="原始Action跳转" />
-
-    <Button
-        android:id="@+id/clazz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="目标Class跳转" />
-
-    <Button
-        android:id="@+id/android_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="系统Action跳转" />
+
+    <Button
+        android:id="@+id/action_for_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="系统Action跳转并获取返回结果" />
+
+    <TextView
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="testasldf" />
 
 </LinearLayout>
