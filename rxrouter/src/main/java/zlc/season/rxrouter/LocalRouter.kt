@@ -36,7 +36,7 @@ class LocalRouter : Router {
 
     private fun obtain(datagram: Datagram): RouteResultService {
         val routeService = RouteResultService()
-        RouteResultServiceHolder.put(datagram.uri, routeService)
+        RouteResultServiceHolder.put(datagram, routeService)
         return routeService
     }
 }

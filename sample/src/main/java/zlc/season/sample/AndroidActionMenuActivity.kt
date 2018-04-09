@@ -16,13 +16,21 @@ class AndroidActionMenuActivity : AppCompatActivity() {
         androidAction.setOnClickListener {
             RxRouter.of(this)
                     .routeAction("")
-                    .subscribe()
+                    .subscribe({
+                        "result".toast()
+                    }, {
+                        it.message?.toast()
+                    })
         }
 
         androidActionForResult.setOnClickListener {
             RxRouter.of(this)
                     .routeAction("")
-                    .subscribe { }
+                    .subscribe({
+                        "result".toast()
+                    }, {
+                        it.message?.toast()
+                    })
         }
     }
 }

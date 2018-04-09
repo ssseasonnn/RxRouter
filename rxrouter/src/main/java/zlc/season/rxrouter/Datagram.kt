@@ -5,7 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Datagram(
-        var uri: String = "",
+        var uri: String? = null,
         var action: String? = null,
         var flags: Int? = null,
         var category: String? = null,

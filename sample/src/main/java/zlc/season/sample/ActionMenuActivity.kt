@@ -31,14 +31,16 @@ class ActionMenuActivity : AppCompatActivity() {
                     .with(20.12)
                     .with("this is a string value")
                     .routeAction("zlc.season.sample.action_for_result")
-                    .subscribe {
+                    .subscribe({
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
                             val stringResult = intent.getStringExtra("result")
                             result_text.text = stringResult
                             stringResult.toast()
                         }
-                    }
+                    }, {
+                        it.message?.toast()
+                    })
         }
 
         library_action_for_result.setOnClickListener {
@@ -49,14 +51,16 @@ class ActionMenuActivity : AppCompatActivity() {
                     .with(0.00001)
                     .with("this is a string value")
                     .routeAction("zlc.season.samplelibrary.action_for_result")
-                    .subscribe {
+                    .subscribe({
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
                             val stringResult = intent.getStringExtra("result")
                             result_text.text = stringResult
                             stringResult.toast()
                         }
-                    }
+                    }, {
+                        it.message?.toast()
+                    })
         }
     }
 }

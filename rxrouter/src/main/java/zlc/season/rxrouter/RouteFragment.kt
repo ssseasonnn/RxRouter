@@ -1,6 +1,7 @@
 package zlc.season.rxrouter
 
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -62,21 +63,40 @@ class RouteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            realRoute(it.getParcelable(IN_DATAGRAM))
+
+        try {
+            realRoute(arguments.getParcelable(IN_DATAGRAM))
+        } catch (throwable: Throwable) {
+            RouteResultServiceHolder.get(datagram)?.error(throwable)
         }
     }
 
     private fun realRoute(datagram: Datagram) {
         this.datagram = datagram
 
-        val dest = RxRouterProviders.provide(datagram.uri)
-        if (dest == null) {
-            RouteResultServiceHolder.get(datagram.uri)
-                    ?.error(IllegalStateException("This uri [${datagram.uri}] not found! " +
-                            "Please confirm this route is added."))
-            return
+        when {
+            datagram.uri != null -> routeUri(datagram)
+            datagram.clazz != null -> routeClass(datagram)
+            datagram.action != null -> routeAction(datagram)
         }
+    }
+
+    private fun routeAction(datagram: Datagram) {
+        val realIntent = Intent(datagram.action)
+        realIntent.putExtra(ROUTE_DATA, datagram)
+        startActivityForResult(realIntent, RC_ROUTE)
+    }
+
+    private fun routeClass(datagram: Datagram) {
+        val realIntent = Intent(context, datagram.clazz)
+        realIntent.putExtra(ROUTE_DATA, datagram)
+        startActivityForResult(realIntent, RC_ROUTE)
+    }
+
+    private fun routeUri(datagram: Datagram) {
+        val dest = RxRouterProviders.provide(datagram.uri)
+                ?: throw IllegalStateException("This uri [${datagram.uri}] not found! " +
+                        "Please confirm this route is added.")
 
         val realIntent = Intent(context, dest)
         realIntent.putExtra(ROUTE_DATA, datagram)
@@ -86,12 +106,12 @@ class RouteFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
-            RouteResultServiceHolder.get(datagram.uri)?.success(Result.empty())
+            RouteResultServiceHolder.get(datagram)?.success(Result.empty())
             return
         }
 
         if (requestCode == RC_ROUTE) {
-            RouteResultServiceHolder.get(datagram.uri)?.success(Result(resultCode, data))
+            RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
             return
         }
 

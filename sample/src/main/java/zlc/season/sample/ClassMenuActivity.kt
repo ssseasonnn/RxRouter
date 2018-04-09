@@ -20,6 +20,8 @@ class ClassMenuActivity : AppCompatActivity() {
                     .routeClass(ClassActivity::class.java)
                     .subscribe({
                         "no result".toast()
+                    }, {
+                        it.message?.toast()
                     })
         }
 
@@ -30,14 +32,16 @@ class ClassMenuActivity : AppCompatActivity() {
                     .with(20.12)
                     .with("this is a string value")
                     .routeClass(ClassForResultActivity::class.java)
-                    .subscribe {
+                    .subscribe({
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
                             val stringResult = intent.getStringExtra("result")
                             result_text.text = stringResult
                             stringResult.toast()
                         }
-                    }
+                    }, {
+                        it.message?.toast()
+                    })
         }
 
         library_clazz_for_result.setOnClickListener {
@@ -48,14 +52,16 @@ class ClassMenuActivity : AppCompatActivity() {
                     .with(0.00001)
                     .with("this is a string value")
                     .routeClass(LibraryClassForResultActivity::class.java)
-                    .subscribe {
+                    .subscribe({
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
                             val stringResult = intent.getStringExtra("result")
                             result_text.text = stringResult
                             stringResult.toast()
                         }
-                    }
+                    }, {
+                        it.message?.toast()
+                    })
         }
     }
 }
