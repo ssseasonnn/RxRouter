@@ -2,6 +2,7 @@ package zlc.season.rxrouter
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -40,6 +41,7 @@ class RxRouter private constructor() {
 
         fun data(intent: Intent): Maybe<Datagram> {
             val datagram = intent.getParcelableExtra<Datagram>(ROUTE_DATA)
+                    ?: return Maybe.error(IllegalStateException("datagram is null"))
             return Maybe.just(datagram)
         }
     }
@@ -79,6 +81,11 @@ class RxRouter private constructor() {
         return this
     }
 
+    fun addUri(uri: Uri): RxRouter {
+        this.datagram.uri = uri
+        return this
+    }
+
     fun addFlags(flags: Int): RxRouter {
         this.datagram.flags = flags
         return this
@@ -99,13 +106,20 @@ class RxRouter private constructor() {
         return this
     }
 
-    fun route(uri: String): Maybe<Result> {
-        datagram.uri = uri
+    fun route(url: String): Maybe<Result> {
+        datagram.url = url
         return dispatch()
     }
 
     fun routeAction(action: String): Maybe<Result> {
         datagram.action = action
+        datagram.isSystemAction = false
+        return dispatch()
+    }
+
+    fun routeSystemAction(action: String): Maybe<Result> {
+        datagram.action = action
+        datagram.isSystemAction = true
         return dispatch()
     }
 

@@ -18,11 +18,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UriActivity"
-            android:label="UriActivity" />
+            android:name=".UrlActivity"
+            android:label="UrlActivity" />
         <activity
-            android:name=".UriForResultActivity"
-            android:label="UriForResultActivity" />
+            android:name=".UrlForResultActivity"
+            android:label="UrlForResultActivity" />
         <activity
             android:name=".ActionActivity"
             android:label="ActionActivity">
@@ -48,8 +48,8 @@
             android:name=".ClassForResultActivity"
             android:label="ClassForResultActivity" />
         <activity
-            android:name=".UriMenuActivity"
-            android:label="UriMenuActivity" />
+            android:name=".UrlMenuActivity"
+            android:label="UrlMenuActivity" />
         <activity
             android:name=".ActionMenuActivity"
             android:label="ActionMenuActivity" />

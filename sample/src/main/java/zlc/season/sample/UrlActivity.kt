@@ -1,21 +1,17 @@
 package zlc.season.sample
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_uri_for_result.*
+import kotlinx.android.synthetic.main.activity_url.*
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
+import zlc.season.rxrouterannotation.Url
 
-@Uri("this is another uri")
-class UriForResultActivity : AppCompatActivity() {
+@Url("this is a url")
+class UrlActivity : AppCompatActivity() {
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_uri_for_result)
+        setContentView(R.layout.activity_url)
 
         RxRouter.data(intent)
                 .subscribe {
@@ -26,13 +22,5 @@ class UriForResultActivity : AppCompatActivity() {
                     string_value.text = "传入的string参数为：${it.stringValue}"
                     bundle_value.text = "传入的bundle参数为：${it.bundle.toString()}"
                 }
-    }
-
-    override fun finish() {
-        val resultIntent = Intent()
-        resultIntent.putExtra("result", "This is result!")
-        setResult(Activity.RESULT_OK, resultIntent)
-
-        super.finish()
     }
 }

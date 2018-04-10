@@ -33,7 +33,7 @@ import javax.tools.Diagnostic;
 
 import zlc.season.rxrouterannotation.Router;
 import zlc.season.rxrouterannotation.Provider;
-import zlc.season.rxrouterannotation.Uri;
+import zlc.season.rxrouterannotation.Url;
 
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -58,7 +58,7 @@ public class AnnotationProcess extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
-        types.add(Uri.class.getCanonicalName());
+        types.add(Url.class.getCanonicalName());
         return types;
     }
 
@@ -71,14 +71,14 @@ public class AnnotationProcess extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
 
-        Set<? extends Element> uriAnnotations = roundEnvironment.getElementsAnnotatedWith(Uri.class);
+        Set<? extends Element> urlAnnotations = roundEnvironment.getElementsAnnotatedWith(Url.class);
         Set<? extends Element> moduleAnnotations = roundEnvironment.getElementsAnnotatedWith(Router.class);
         moduleAnnotationSize += moduleAnnotations.size();
 
         for (Element element : moduleAnnotations) {
             String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
             try {
-                generateRoutingTable(packageName, element.getSimpleName().toString(), uriAnnotations);
+                generateRoutingTable(packageName, element.getSimpleName().toString(), urlAnnotations);
             } catch (IOException e) {
                 printError(e.getMessage());
             }
@@ -93,7 +93,7 @@ public class AnnotationProcess extends AbstractProcessor {
         return true;
     }
 
-    private void generateRoutingTable(String packageName, String className, Set<? extends Element> uriAnnotations) throws IOException {
+    private void generateRoutingTable(String packageName, String className, Set<? extends Element> urlAnnotations) throws IOException {
         TypeName classWithWildcard = ParameterizedTypeName.get(ClassName.get(Class.class),
                 WildcardTypeName.subtypeOf(Object.class));
 
@@ -109,19 +109,19 @@ public class AnnotationProcess extends AbstractProcessor {
 
         CodeBlock.Builder staticBlock = CodeBlock.builder();
 
-        for (Element element : uriAnnotations) {
+        for (Element element : urlAnnotations) {
             TypeElement typeElement = (TypeElement) element;
             ClassName activity = ClassName.get(typeElement);
-            String uri = element.getAnnotation(Uri.class).value();
-            staticBlock.add("table.put($S,$T.class);\n", uri, activity);
+            String url = element.getAnnotation(Url.class).value();
+            staticBlock.add("table.put($S,$T.class);\n", url, activity);
         }
 
         MethodSpec provideMethod = MethodSpec.methodBuilder("provide")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Override.class).build())
-                .addParameter(String.class, "uri")
+                .addParameter(String.class, "url")
                 .returns(classWithWildcard)
-                .addStatement("return table.get(uri)")
+                .addStatement("return table.get(url)")
                 .build();
 
         TypeSpec routerTableProvider = TypeSpec.classBuilder(className + "Provider")

@@ -1,17 +1,21 @@
-package zlc.season.sample
+package zlc.season.samplelibrary
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_uri.*
+import kotlinx.android.synthetic.main.activity_library_url_for_result.*
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
+import zlc.season.rxrouterannotation.Url
 
-@Uri("this is a uri")
-class UriActivity : AppCompatActivity() {
+@Url("this is library url")
+class LibraryUrlForResultActivity : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_uri)
+        setContentView(R.layout.activity_library_url_for_result)
 
         RxRouter.data(intent)
                 .subscribe {
@@ -22,5 +26,13 @@ class UriActivity : AppCompatActivity() {
                     string_value.text = "传入的string参数为：${it.stringValue}"
                     bundle_value.text = "传入的bundle参数为：${it.bundle.toString()}"
                 }
+    }
+
+    override fun finish() {
+        val resultIntent = Intent()
+        resultIntent.putExtra("result", "This is library result!")
+        setResult(Activity.RESULT_OK, resultIntent)
+
+        super.finish()
     }
 }

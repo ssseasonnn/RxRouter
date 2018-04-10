@@ -4,8 +4,8 @@
 
     <application>
         <activity
-            android:name=".LibraryUriForResultActivity"
-            android:label="LibraryUriForResultActivity" />
+            android:name=".LibraryUrlForResultActivity"
+            android:label="LibraryUrlForResultActivity" />
 
         <activity
             android:name=".LibraryActionForResultActivity"

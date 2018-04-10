@@ -5,10 +5,10 @@ import zlc.season.rxrouterannotation.Provider
 object RxRouterProviders : Provider {
     private val routerProviders: MutableList<Provider> = mutableListOf()
 
-    override fun provide(uri: String?): Class<*>? {
+    override fun provide(url: String?): Class<*>? {
         for (item in routerProviders) {
-            if (item.provide(uri) != null) {
-                return item.provide(uri)
+            if (item.provide(url) != null) {
+                return item.provide(url)
             }
         }
         return null

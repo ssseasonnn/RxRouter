@@ -7,10 +7,10 @@
     tools:context="zlc.season.sample.MainActivity">
 
     <Button
-        android:id="@+id/uri"
+        android:id="@+id/url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uri路由跳转" />
+        android:text="Url路由跳转" />
 
     <Button
         android:id="@+id/action"

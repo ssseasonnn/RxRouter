@@ -6,16 +6,16 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/androidAction"
+        android:id="@+id/call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="系统Action跳转" />
+        android:text="拨号123456" />
 
     <Button
-        android:id="@+id/androidActionForResult"
+        android:id="@+id/send_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="系统Action跳转并获取返回结果" />
+        android:text="发送短信至10086" />
 
     <TextView
         android:id="@+id/result_text"

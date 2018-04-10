@@ -1,21 +1,21 @@
-package zlc.season.samplelibrary
+package zlc.season.sample
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_library_uri_for_result.*
+import kotlinx.android.synthetic.main.activity_url_for_result.*
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
+import zlc.season.rxrouterannotation.Url
 
-@Uri("this is library uri")
-class LibraryUriForResultActivity : AppCompatActivity() {
+@Url("this is another url")
+class UrlForResultActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_library_uri_for_result)
+        setContentView(R.layout.activity_url_for_result)
 
         RxRouter.data(intent)
                 .subscribe {
@@ -30,7 +30,7 @@ class LibraryUriForResultActivity : AppCompatActivity() {
 
     override fun finish() {
         val resultIntent = Intent()
-        resultIntent.putExtra("result", "This is library result!")
+        resultIntent.putExtra("result", "This is result!")
         setResult(Activity.RESULT_OK, resultIntent)
 
         super.finish()

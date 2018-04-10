@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import zlc.season.rxrouter.RxRouter.Companion.ROUTE_DATA
+import zlc.season.rxrouter.RxRouter.Companion.data
 
 class RouteFragment : Fragment() {
 
@@ -76,7 +77,7 @@ class RouteFragment : Fragment() {
         map[requestCode] = datagram
 
         when {
-            datagram.uri != null -> routeUri(datagram, requestCode)
+            datagram.url != null -> routeUrl(datagram, requestCode)
             datagram.clazz != null -> routeClass(datagram, requestCode)
             datagram.action != null -> routeAction(datagram, requestCode)
         }
@@ -86,22 +87,44 @@ class RouteFragment : Fragment() {
 
     private fun routeAction(datagram: Datagram, requestCode: Int) {
         val realIntent = Intent(datagram.action)
-        realIntent.putExtra(ROUTE_DATA, datagram)
+        if (datagram.uri != null && datagram.type != null) {
+            realIntent.setDataAndType(datagram.uri, datagram.type)
+        } else if (datagram.type != null) {
+            realIntent.type = datagram.type
+        } else if (datagram.uri != null) {
+            realIntent.data = datagram.uri
+        }
+
+        datagram.flags?.let { realIntent.addFlags(it) }
+        datagram.category?.let { realIntent.addCategory(it) }
+        datagram.bundle?.let { realIntent.putExtras(it) }
+
+        datagram.isSystemAction?.let {
+            if (!it) {
+                realIntent.putExtra(ROUTE_DATA, datagram)
+            }
+        }
+
         startActivityForResult(realIntent, requestCode)
     }
 
     private fun routeClass(datagram: Datagram, requestCode: Int) {
         val realIntent = Intent(context, datagram.clazz)
+
+        datagram.flags?.let { realIntent.addFlags(it) }
+
         realIntent.putExtra(ROUTE_DATA, datagram)
         startActivityForResult(realIntent, requestCode)
     }
 
-    private fun routeUri(datagram: Datagram, requestCode: Int) {
-        val dest = RxRouterProviders.provide(datagram.uri)
-                ?: throw IllegalStateException("This uri [${datagram.uri}] not found! " +
+    private fun routeUrl(datagram: Datagram, requestCode: Int) {
+        val dest = RxRouterProviders.provide(datagram.url)
+                ?: throw IllegalStateException("This url [${datagram.url}] not found! " +
                         "Please confirm this route is added.")
 
         val realIntent = Intent(context, dest)
+        datagram.flags?.let { realIntent.addFlags(it) }
+
         realIntent.putExtra(ROUTE_DATA, datagram)
         startActivityForResult(realIntent, requestCode)
     }

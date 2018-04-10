@@ -3,32 +3,33 @@ package zlc.season.sample
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_uri_menu.*
+import kotlinx.android.synthetic.main.activity_url_menu.*
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
+import zlc.season.rxrouterannotation.Url
 
-@Uri(uriMenu)
-class UriMenuActivity : AppCompatActivity() {
+@Url(urlMenu)
+class UrlMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_uri_menu)
+        setContentView(R.layout.activity_url_menu)
 
-        uri.setOnClickListener {
+        url.setOnClickListener {
             RxRouter.of(this)
-                    .route("this is a uri")
+                    .route("this is a url")
                     .subscribe({
                         "no result".toast()
                     })
         }
 
-        uri_for_result.setOnClickListener {
+        url_for_result.setOnClickListener {
             RxRouter.of(this)
                     .with(10)
                     .with(true)
                     .with(20.12)
                     .with("this is a string value")
-                    .route("this is another uri")
+                    .with(Bundle())
+                    .route("this is another url")
                     .subscribe {
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
@@ -39,14 +40,14 @@ class UriMenuActivity : AppCompatActivity() {
                     }
         }
 
-        library_uri_for_result.setOnClickListener {
+        library_url_for_result.setOnClickListener {
             RxRouter.of(this)
                     .with(2000)
                     .with(9999999999999999)
                     .with(false)
                     .with(0.00001)
                     .with("this is a string value")
-                    .route("this is library uri")
+                    .route("this is library url")
                     .subscribe {
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data

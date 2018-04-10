@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
 
 
 class MainActivity : AppCompatActivity() {
@@ -13,9 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        uri.setOnClickListener {
+        url.setOnClickListener {
             RxRouter.of(this)
-                    .route(uriMenu)
+                    .route(urlMenu)
                     .subscribe()
         }
 

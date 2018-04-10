@@ -6,22 +6,22 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/uri"
+        android:id="@+id/url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uri跳转" />
+        android:text="Url跳转" />
 
     <Button
-        android:id="@+id/uri_for_result"
+        android:id="@+id/url_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uri跳转并获取返回结果" />
+        android:text="Url跳转并获取返回结果" />
 
     <Button
-        android:id="@+id/library_uri_for_result"
+        android:id="@+id/library_url_for_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Library Uri跳转并获取返回结果" />
+        android:text="Library Url跳转并获取返回结果" />
 
     <TextView
         android:id="@+id/result_text"

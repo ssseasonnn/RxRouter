@@ -7,9 +7,9 @@ import kotlinx.android.synthetic.main.activity_firewall_menu.*
 import zlc.season.rxrouter.Datagram
 import zlc.season.rxrouter.Firewall
 import zlc.season.rxrouter.RxRouter
-import zlc.season.rxrouterannotation.Uri
+import zlc.season.rxrouterannotation.Url
 
-@Uri(firewallMenu)
+@Url(firewallMenu)
 class FirewallMenuActivity : AppCompatActivity() {
 
     var loginStatus = false
@@ -30,12 +30,12 @@ class FirewallMenuActivity : AppCompatActivity() {
             tv_login_status.text = "未登录"
         }
 
-        btn_uri.setOnClickListener {
+        btn_url.setOnClickListener {
             RxRouter.of(this)
                     .with(123)
                     .with(false)
                     .addFirewall(LoginFirewall(loginStatus))
-                    .route("this is another uri")
+                    .route("this is another url")
                     .subscribe({
                         if (it.resultCode == Activity.RESULT_OK) {
                             val intent = it.data
