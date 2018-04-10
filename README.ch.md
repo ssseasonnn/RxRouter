@@ -1,10 +1,8 @@
 # RxRouter
 
-A lightweight, simple, smart and powerful Android routing library.
+一个轻量级、简单、智能并且强大的安卓路由库
 
 *Read this in other languages: [中文](README.ch.md), [English](README.md)* 
-
-
 
 
 
