@@ -193,7 +193,7 @@ class LoginFirewall : Firewall {
 
 //Add Firewall to Route
 RxRouter.of(this)
-        .addFirewall(LoginFirewall(loginStatus))
+        .addFirewall(LoginFirewall())
         .route("this is a url")
         .subscribe()
 ```
