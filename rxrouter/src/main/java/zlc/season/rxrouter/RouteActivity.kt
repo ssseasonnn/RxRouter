@@ -42,6 +42,7 @@ class RouteActivity : Activity() {
             realRoute()
         } catch (throwable: Throwable) {
             RouteResultServiceHolder.get(datagram)?.error(throwable)
+            RouteResultServiceHolder.remove(datagram)
         }
     }
 
@@ -100,12 +101,14 @@ class RouteActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
             RouteResultServiceHolder.get(datagram)?.success(Result.empty())
+            RouteResultServiceHolder.remove(datagram)
             finish()
             return
         }
 
         if (requestCode == RC_ROUTE) {
             RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
+            RouteResultServiceHolder.remove(datagram)
             finish()
             return
         }

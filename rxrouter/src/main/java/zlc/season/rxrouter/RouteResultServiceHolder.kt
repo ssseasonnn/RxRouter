@@ -12,4 +12,9 @@ object RouteResultServiceHolder {
     fun get(datagram: Datagram): RouteResultService? {
         return MAP[datagram]
     }
+
+    @Synchronized
+    fun remove(datagram: Datagram) {
+        MAP.remove(datagram)
+    }
 }

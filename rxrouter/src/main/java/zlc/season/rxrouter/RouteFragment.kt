@@ -69,6 +69,7 @@ class RouteFragment : Fragment() {
             realRoute(datagram)
         } catch (throwable: Throwable) {
             RouteResultServiceHolder.get(datagram)?.error(throwable)
+            RouteResultServiceHolder.remove(datagram)
         }
     }
 
@@ -136,10 +137,12 @@ class RouteFragment : Fragment() {
 
         if (data == null) {
             RouteResultServiceHolder.get(datagram)?.success(Result.empty())
+            RouteResultServiceHolder.remove(datagram)
             return
         }
 
         RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
+        RouteResultServiceHolder.remove(datagram)
     }
 }
 
