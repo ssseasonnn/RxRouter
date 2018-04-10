@@ -12,13 +12,13 @@ group = "zlc.season"       // Maven Group ID for the artifact，一般填你唯�
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
-        pom.artifactId = "rxrouter"
+        pom.artifactId = "rxrouter-annotation"
 
         pom {
             project {
-                packaging 'aar'
+                packaging 'jar'
                 // Add your description here
-                name 'RxRouter'
+                name 'RxRouter Annotation'
                 url siteUrl
                 // Set your license
                 licenses {
@@ -44,13 +44,9 @@ install {
     }
 }
 
-task sourcesJar(type: Jar) {
+task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc, dependsOn: dokka) {
-
+    from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -72,7 +68,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "android"
-        name = "RxRouter"    //发布到JCenter上的项目名字
+        name = "RxRouterAnnotation"    //发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
