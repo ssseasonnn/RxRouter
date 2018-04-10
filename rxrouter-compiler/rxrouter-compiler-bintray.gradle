@@ -68,7 +68,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "android"
-        name = "RxRouter-Compiler"    //发布到JCenter上的项目名字
+        name = "RxRouterCompiler"    //发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

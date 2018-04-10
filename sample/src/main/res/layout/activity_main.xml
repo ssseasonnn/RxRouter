@@ -30,4 +30,10 @@
         android:layout_height="wrap_content"
         android:text="系统Action跳转" />
 
+    <Button
+        android:id="@+id/firewall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="防火墙" />
+
 </LinearLayout>

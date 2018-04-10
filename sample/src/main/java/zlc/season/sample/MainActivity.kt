@@ -36,5 +36,11 @@ class MainActivity : AppCompatActivity() {
                     .route(androidActionMenu)
                     .subscribe()
         }
+
+        firewall.setOnClickListener {
+            RxRouter.of(this)
+                    .route(firewallMenu)
+                    .subscribe()
+        }
     }
 }

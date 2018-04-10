@@ -59,6 +59,7 @@
         <activity
             android:name=".AndroidActionMenuActivity"
             android:label="AndroidActionMenuActivity" />
+        <activity android:name=".FirewallMenuActivity"></activity>
     </application>
 
 </manifest>

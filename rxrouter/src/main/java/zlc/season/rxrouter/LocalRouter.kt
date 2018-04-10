@@ -29,6 +29,7 @@ class LocalRouter : Router {
                 .doOnSuccess {
                     for (firewall in firewalls) {
                         if (!firewall.allow(datagram)) {
+                            firewall.thrown()?.let { throw  it }
                             throw Exceptions.FirewallDenied()
                         }
                     }

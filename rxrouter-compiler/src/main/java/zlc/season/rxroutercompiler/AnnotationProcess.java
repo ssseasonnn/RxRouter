@@ -88,9 +88,6 @@ public class AnnotationProcess extends AbstractProcessor {
             if (moduleAnnotationSize == 0) {
                 printError("You need to add a class that is annotated by @Router to your module!");
             }
-            if (moduleAnnotationSize > 1) {
-                printError("Too many classes annotated by @Router in your module!");
-            }
         }
 
         return true;
