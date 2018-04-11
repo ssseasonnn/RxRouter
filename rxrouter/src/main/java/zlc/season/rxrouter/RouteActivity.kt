@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import zlc.season.rxrouter.RxRouter.Companion.ROUTE_DATA
 
 class RouteActivity : Activity() {
@@ -20,18 +19,6 @@ class RouteActivity : Activity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
-
-        fun route(activity: Activity, datagram: Datagram) {
-            val intent = Intent(activity, RouteActivity::class.java)
-            intent.putExtra(IN_DATAGRAM, datagram)
-            activity.startActivity(intent)
-        }
-
-        fun route(fragment: Fragment, datagram: Datagram) {
-            val intent = Intent(fragment.context, RouteActivity::class.java)
-            intent.putExtra(IN_DATAGRAM, datagram)
-            fragment.context.startActivity(intent)
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +29,6 @@ class RouteActivity : Activity() {
             realRoute()
         } catch (throwable: Throwable) {
             RouteResultServiceHolder.get(datagram)?.error(throwable)
-            RouteResultServiceHolder.remove(datagram)
         }
     }
 
@@ -101,14 +87,12 @@ class RouteActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
             RouteResultServiceHolder.get(datagram)?.success(Result.empty())
-            RouteResultServiceHolder.remove(datagram)
             finish()
             return
         }
 
         if (requestCode == RC_ROUTE) {
             RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
-            RouteResultServiceHolder.remove(datagram)
             finish()
             return
         }

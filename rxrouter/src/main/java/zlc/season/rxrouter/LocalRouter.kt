@@ -43,6 +43,9 @@ class LocalRouter : Router {
                 .flatMap {
                     it.get().lastElement()
                 }
+                .doFinally {
+                    RouteResultServiceHolder.remove(datagram)
+                }
     }
 
     private fun obtain(datagram: Datagram): RouteResultService {

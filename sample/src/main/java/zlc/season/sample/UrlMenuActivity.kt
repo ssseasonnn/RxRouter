@@ -23,7 +23,7 @@ class UrlMenuActivity : AppCompatActivity() {
         }
 
         url_for_result.setOnClickListener {
-            RxRouter.of(this.applicationContext)
+            RxRouter.of(this)
                     .with(10)
                     .with(true)
                     .with(20.12)

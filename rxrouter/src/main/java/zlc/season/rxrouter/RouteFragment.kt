@@ -57,32 +57,25 @@ class RouteFragment : Fragment() {
         }
     }
 
-    private var requestCode = 101
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val datagram = arguments.getParcelable<Datagram>(IN_DATAGRAM)
-
-        try {
-            realRoute(datagram)
-        } catch (throwable: Throwable) {
-            RouteResultServiceHolder.get(datagram)?.error(throwable)
-            RouteResultServiceHolder.remove(datagram)
+        arguments?.let {
+            realRoute(it.getParcelable(IN_DATAGRAM))
         }
     }
 
-    @Synchronized
     private fun realRoute(datagram: Datagram) {
-        RequestCodeHolder.put(requestCode, datagram)
+        val requestCode = RequestCodeHolder.put(datagram)
 
-        when {
-            datagram.url != null -> routeUrl(datagram, requestCode)
-            datagram.clazz != null -> routeClass(datagram, requestCode)
-            datagram.action != null -> routeAction(datagram, requestCode)
+        try {
+            when {
+                datagram.url != null -> routeUrl(datagram, requestCode)
+                datagram.clazz != null -> routeClass(datagram, requestCode)
+                datagram.action != null -> routeAction(datagram, requestCode)
+            }
+        } catch (throwable: Throwable) {
+            RouteResultServiceHolder.get(datagram)?.error(throwable)
         }
-
-        requestCode++
     }
 
     private fun routeAction(datagram: Datagram, requestCode: Int) {
@@ -137,13 +130,11 @@ class RouteFragment : Fragment() {
 
         if (data == null) {
             RouteResultServiceHolder.get(datagram)?.success(Result.empty())
-            RouteResultServiceHolder.remove(datagram)
             RequestCodeHolder.remove(requestCode)
             return
         }
 
         RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
-        RouteResultServiceHolder.remove(datagram)
         RequestCodeHolder.remove(requestCode)
     }
 }

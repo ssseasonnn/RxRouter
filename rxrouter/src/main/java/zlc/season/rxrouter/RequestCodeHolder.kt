@@ -1,11 +1,15 @@
 package zlc.season.rxrouter
 
 object RequestCodeHolder {
+    private var REQUEST_CODE = 101
     private val MAP: MutableMap<Int, Datagram> = mutableMapOf()
 
     @Synchronized
-    fun put(requestCode: Int, datagram: Datagram) {
+    fun put(datagram: Datagram): Int {
+        val requestCode = REQUEST_CODE
         MAP[requestCode] = datagram
+        REQUEST_CODE++
+        return requestCode
     }
 
     @Synchronized
