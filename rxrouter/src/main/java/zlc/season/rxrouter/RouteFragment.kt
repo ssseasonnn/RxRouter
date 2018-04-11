@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import zlc.season.rxrouter.RxRouter.Companion.ROUTE_DATA
-import zlc.season.rxrouter.RxRouter.Companion.data
 
 class RouteFragment : Fragment() {
 
@@ -59,7 +58,7 @@ class RouteFragment : Fragment() {
     }
 
     private var requestCode = 101
-    private val map: MutableMap<Int, Datagram> = mutableMapOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +74,7 @@ class RouteFragment : Fragment() {
 
     @Synchronized
     private fun realRoute(datagram: Datagram) {
-        map[requestCode] = datagram
+        RequestCodeHolder.put(requestCode, datagram)
 
         when {
             datagram.url != null -> routeUrl(datagram, requestCode)
@@ -133,16 +132,19 @@ class RouteFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        val datagram = map[requestCode] ?: throw IllegalStateException("This should never happen.")
+        val datagram = RequestCodeHolder.get(requestCode)
+                ?: throw IllegalStateException("This should never happen.")
 
         if (data == null) {
             RouteResultServiceHolder.get(datagram)?.success(Result.empty())
             RouteResultServiceHolder.remove(datagram)
+            RequestCodeHolder.remove(requestCode)
             return
         }
 
         RouteResultServiceHolder.get(datagram)?.success(Result(resultCode, data))
         RouteResultServiceHolder.remove(datagram)
+        RequestCodeHolder.remove(requestCode)
     }
 }
 

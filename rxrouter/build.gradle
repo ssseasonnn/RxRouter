@@ -25,8 +25,8 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    api project(':rxrouter-annotation')
-    api 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile project(':rxrouter-annotation')
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 
     testImplementation 'junit:junit:4.12'
 }

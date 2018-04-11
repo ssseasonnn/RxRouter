@@ -1,9 +1,9 @@
 apply plugin: 'java'
 
 dependencies {
-    implementation project(':rxrouter-annotation')
-    implementation 'com.google.auto.service:auto-service:1.0-rc4'
-    implementation 'com.squareup:javapoet:1.10.0'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
+    compile 'com.squareup:javapoet:1.10.0'
+    compile project(':rxrouter-annotation')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7

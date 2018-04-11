@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 
-class Datagram(
+data class Datagram(
         var url: String? = null,
         var action: String? = null,
         var uri: Uri? = null,
@@ -20,8 +20,8 @@ class Datagram(
         var stringValue: String? = null,
         var booleanValue: Boolean? = null,
         var bundle: Bundle? = null,
-        var isSystemAction: Boolean? = null
-
+        var isSystemAction: Boolean? = null,
+        val magicNumber: Long = 0L
 ) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
@@ -38,7 +38,8 @@ class Datagram(
             source.readString(),
             source.readValue(Boolean::class.java.classLoader) as Boolean?,
             source.readParcelable<Bundle>(Bundle::class.java.classLoader),
-            source.readValue(Boolean::class.java.classLoader) as Boolean?
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readLong()
     )
 
     override fun describeContents() = 0
@@ -59,11 +60,14 @@ class Datagram(
         writeValue(booleanValue)
         writeParcelable(bundle, 0)
         writeValue(isSystemAction)
+        writeLong(magicNumber)
     }
 
     companion object {
+        private var magicNumber = 0L
+
         fun empty(): Datagram {
-            return Datagram()
+            return Datagram(magicNumber = magicNumber++)
         }
 
         @JvmField

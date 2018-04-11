@@ -1,6 +1,6 @@
 # RxRouter
 
-![](https://img.shields.io/badge/language-kotlin-brightgreen.svg) ![](https://img.shields.io/badge/RxJava-2.0-blue.svg)[![Download](https://api.bintray.com/packages/ssseasonnn/android/RxRouter/images/download.svg)](https://bintray.com/ssseasonnn/android/RxRouter/_latestVersion)
+![](https://img.shields.io/badge/language-kotlin-brightgreen.svg) ![](https://img.shields.io/badge/RxJava-2.0-blue.svg) [![Download](https://api.bintray.com/packages/ssseasonnn/android/RxRouter/images/download.svg)](https://bintray.com/ssseasonnn/android/RxRouter/_latestVersion)
 
 
 *Read this in other languages: [中文](README.ch.md), [English](README.md)* 
