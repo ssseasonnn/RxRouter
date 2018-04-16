@@ -41,11 +41,15 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 @AutoService(Processor.class)
 public class AnnotationProcess extends AbstractProcessor {
+    private String TAG = "RxRouter: ";
+
     private Messager messager;
     private Elements elementUtils;
     private Filer filer;
 
-    private int moduleAnnotationSize = 0;
+    private String className = "";
+    private String packageName = "";
+    private CodeBlock.Builder staticBlock = CodeBlock.builder();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -59,6 +63,7 @@ public class AnnotationProcess extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
         types.add(Url.class.getCanonicalName());
+        types.add(Router.class.getCanonicalName());
         return types;
     }
 
@@ -70,30 +75,34 @@ public class AnnotationProcess extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        Set<? extends Element> urls = roundEnvironment.getElementsAnnotatedWith(Url.class);
+        Set<? extends Element> routers = roundEnvironment.getElementsAnnotatedWith(Router.class);
 
-        Set<? extends Element> urlAnnotations = roundEnvironment.getElementsAnnotatedWith(Url.class);
-        Set<? extends Element> moduleAnnotations = roundEnvironment.getElementsAnnotatedWith(Router.class);
-        moduleAnnotationSize += moduleAnnotations.size();
-
-        for (Element element : moduleAnnotations) {
-            String packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
-            try {
-                generateRoutingTable(packageName, element.getSimpleName().toString(), urlAnnotations);
-            } catch (IOException e) {
-                printError(e.getMessage());
-            }
-        }
+        generateName(routers);
+        generateStaticBlock(urls);
 
         if (roundEnvironment.processingOver()) {
-            if (moduleAnnotationSize == 0) {
+            if (packageName.isEmpty() || className.isEmpty()) {
                 printError("You need to add a class that is annotated by @Router to your module!");
+                return true;
+            }
+            try {
+                generateRoutingTable();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        return true;
+        return false;
     }
 
-    private void generateRoutingTable(String packageName, String className, Set<? extends Element> urlAnnotations) throws IOException {
+    private void generateName(Set<? extends Element> routers) {
+        for (Element element : routers) {
+            packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
+            className = element.getSimpleName().toString() + "Provider";
+        }
+    }
+
+    private void generateRoutingTable() throws IOException {
         TypeName classWithWildcard = ParameterizedTypeName.get(ClassName.get(Class.class),
                 WildcardTypeName.subtypeOf(Object.class));
 
@@ -107,15 +116,6 @@ public class AnnotationProcess extends AbstractProcessor {
                 .initializer(CodeBlock.builder().add("new $T<>()", ClassName.get(HashMap.class)).build())
                 .build();
 
-        CodeBlock.Builder staticBlock = CodeBlock.builder();
-
-        for (Element element : urlAnnotations) {
-            TypeElement typeElement = (TypeElement) element;
-            ClassName activity = ClassName.get(typeElement);
-            String url = element.getAnnotation(Url.class).value();
-            staticBlock.add("table.put($S,$T.class);\n", url, activity);
-        }
-
         MethodSpec provideMethod = MethodSpec.methodBuilder("provide")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Override.class).build())
@@ -124,7 +124,7 @@ public class AnnotationProcess extends AbstractProcessor {
                 .addStatement("return table.get(url)")
                 .build();
 
-        TypeSpec routerTableProvider = TypeSpec.classBuilder(className + "Provider")
+        TypeSpec routerTableProvider = TypeSpec.classBuilder(className)
                 .addModifiers(PUBLIC, FINAL)
                 .addSuperinterface(ClassName.get(Provider.class))
                 .addField(routerTable)
@@ -137,11 +137,20 @@ public class AnnotationProcess extends AbstractProcessor {
                 .writeTo(filer);
     }
 
+    private void generateStaticBlock(Set<? extends Element> urlAnnotations) {
+        for (Element element : urlAnnotations) {
+            TypeElement typeElement = (TypeElement) element;
+            ClassName activity = ClassName.get(typeElement);
+            String url = element.getAnnotation(Url.class).value();
+            staticBlock.add("table.put($S,$T.class);\n", url, activity);
+        }
+    }
+
     private void printError(String message) {
-        messager.printMessage(Diagnostic.Kind.ERROR, message);
+        messager.printMessage(Diagnostic.Kind.ERROR, TAG + message);
     }
 
     private void printWaring(String waring) {
-        messager.printMessage(Diagnostic.Kind.WARNING, waring);
+        messager.printMessage(Diagnostic.Kind.WARNING, TAG + waring);
     }
 }
