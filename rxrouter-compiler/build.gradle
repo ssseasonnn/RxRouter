@@ -1,12 +1,10 @@
 apply plugin: 'java'
 
 dependencies {
-    compileOnly 'com.google.auto.service:auto-service:1.0-rc4'
-    compile 'com.squareup:javapoet:1.10.0'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc6'
+    compile 'com.squareup:javapoet:1.11.1'
     compile project(':rxrouter-annotation')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
-
-apply from: 'rxrouter-compiler-bintray.gradle'

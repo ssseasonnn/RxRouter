@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.dokka-android'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -22,18 +21,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    compile project(':rxrouter-annotation')
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    api project(':rxrouter-annotation')
+    api 'io.reactivex.rxjava2:rxjava:2.1.0'
 
     testImplementation 'junit:junit:4.12'
 }
-
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
-}
-
-apply from: 'rxrouter-bintray.gradle'
