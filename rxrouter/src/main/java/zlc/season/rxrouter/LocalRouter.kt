@@ -7,21 +7,21 @@ import io.reactivex.Maybe
 
 class LocalRouter : Router {
     override fun route(context: Context, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
-        return real(datagram, firewalls, {
+        return real(datagram, firewalls) {
             RouteActivity.route(context, datagram)
-        })
+        }
     }
 
     override fun route(activity: FragmentActivity, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
-        return real(datagram, firewalls, {
+        return real(datagram, firewalls) {
             RouteFragment.route(activity, datagram)
-        })
+        }
     }
 
     override fun route(fragment: Fragment, datagram: Datagram, firewalls: List<Firewall>): Maybe<Result> {
-        return real(datagram, firewalls, {
+        return real(datagram, firewalls) {
             RouteFragment.route(fragment, datagram)
-        })
+        }
     }
 
     private fun real(datagram: Datagram, firewalls: List<Firewall>, action: () -> Unit): Maybe<Result> {
